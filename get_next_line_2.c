@@ -6,12 +6,21 @@
 /*   By: llorgere <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 14:49:32 by llorgere          #+#    #+#             */
-/*   Updated: 2017/06/17 17:47:54 by llorgere         ###   ########.fr       */
+/*   Updated: 2017/06/17 18:33:42 by llorgere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+int		ft_strlen_int(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
 
 static char	*ft_buff_cpy(int i, char *buff)
 {
@@ -19,13 +28,14 @@ static char	*ft_buff_cpy(int i, char *buff)
 	int 	j;
 
 	j = 0;
-	if (!(str = (char*)malloc(sizeof(char) * i)))
+	if (!(str = (char*)malloc(sizeof(char) * i + 1)))
 		return (0);
 	while (j < i)
 	{
 		str[j] = buff[j];
 		j++;
 	}
+	str[j] = '\0';
 	return (str);
 }
 
@@ -51,20 +61,23 @@ int			get_next_line(const int fd, char **line)
 			if (buff[i] == '\n')
 			{
 				printf("test 4\n");
+				printf("la bonne partie de buff est [%s]\n", ft_buff_cpy(i, buff));
+				printf("tmp est [%s]\n", tmp);
 				// copie buff jusqu'a buff[i - 1] dans line
-				*line = (char *)malloc(sizeof(char) * (ft_strlen(tmp) + ft_strlen(buff) + 1));
+//				*line = (char *)malloc(sizeof(char) * (ft_strlen_int(tmp) + ft_strlen_int(ft_buff_cpy(i, buff)) + 1));
 				printf("test du malloc de line\n");
 				*line = ft_strjoin(tmp, ft_buff_cpy(i, buff));
+				printf("line est [%s]\n", *line);
 				free(tmp);
 				free(ft_buff_cpy(i, buff));
 				tmp = ft_strdup(buff + i);
 				return (1);
 			}
-	//		printf("test 5\n");
+			//		printf("test 5\n");
 			else if (buff[i] == '\0')
 			{
 				printf("test 6\n");
-				*line = (char *)malloc(sizeof(char) * (ft_strlen(tmp) + ft_strlen(buff) + 1));
+				*line = (char *)malloc(sizeof(char) * (ft_strlen_int(tmp) + ft_strlen_int(buff) + 1));
 				*line = ft_strjoin(tmp, ft_buff_cpy(i, buff));
 				free(ft_buff_cpy(i, buff));
 				free(tmp);
