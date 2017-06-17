@@ -1,16 +1,20 @@
-
+#include "get_next_line.h"
 #include <stdio.h>
 
-void	ft_print(void)
+int        main(void)
 {
-	static int	i = 0;
+	int fd = open("test.txt", O_RDONLY);
+	char    *line = NULL;
 
-	printf("the number is:%d\n", i++);
-}
-
-int main(void)
-{
-	for (int i = 0;i < 10;i++)
-		ft_print();
+	printf("test 1 du main, fd est %d\n", fd);
+	while ((get_next_line(fd, &line)))
+	{
+		printf("test 2 du main\n");
+		printf("%s\n", line);
+	}
+	printf("test 3 du main\n");
+	close(fd);
+	printf("test 4 du main\n");
 	return (0);
+
 }

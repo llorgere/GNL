@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llorgere <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/13 17:03:22 by llorgere          #+#    #+#             */
-/*   Updated: 2017/06/17 17:25:33 by llorgere         ###   ########.fr       */
+/*   Created: 2017/05/01 17:29:41 by llorgere          #+#    #+#             */
+/*   Updated: 2017/05/01 17:44:14 by llorgere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
-# include "libft/libft.h"
-int		get_next_line(const int fd, char **line);
+#include "libft.h"
 
-
-#endif
+void	ft_putnbr(int n)
+{
+	if (n == -2147483648)
+	{
+		ft_putnbr(n / 10);
+		ft_putchar('8');
+	}
+	else if (n < 0)
+	{
+		ft_putchar('-');
+		ft_putnbr(-n);
+	}
+	else if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+		ft_putchar((n % 10) + 48);
+	}
+	else
+		ft_putchar((n % 10) + 48);
+}

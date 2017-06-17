@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llorgere <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/13 17:03:22 by llorgere          #+#    #+#             */
-/*   Updated: 2017/06/17 17:25:33 by llorgere         ###   ########.fr       */
+/*   Created: 2017/04/14 18:13:14 by llorgere          #+#    #+#             */
+/*   Updated: 2017/04/14 18:58:54 by llorgere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
-# include "libft/libft.h"
-int		get_next_line(const int fd, char **line);
+char	*ft_strstr(const char *str, const char *to_find)
+{
+	int		i;
+	int		j;
+	char	*tstr;
+	char	*tto_find;
 
-
-#endif
+	i = 0;
+	tstr = (char *)str;
+	tto_find = (char *)to_find;
+	if (tto_find[i] == '\0')
+		return (tstr);
+	while (tstr[i] != '\0')
+	{
+		j = 0;
+		while (tstr[i + j] == tto_find[j])
+		{
+			j++;
+			if (tto_find[j] == '\0')
+				return (tstr + i);
+		}
+		i++;
+	}
+	return (0);
+}

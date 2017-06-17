@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strequ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llorgere <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/13 17:03:22 by llorgere          #+#    #+#             */
-/*   Updated: 2017/06/17 17:25:33 by llorgere         ###   ########.fr       */
+/*   Created: 2017/05/05 15:27:54 by llorgere          #+#    #+#             */
+/*   Updated: 2017/05/05 19:25:40 by llorgere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
-# include "libft/libft.h"
-int		get_next_line(const int fd, char **line);
+#include "libft.h"
 
+int	ft_strequ(char const *s1, char const *s2)
+{
+	int	i;
 
-#endif
+	if (!s1 || !s2)
+		return (0);
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		else
+			i++;
+	}
+	if (s1[i] != s2[i])
+		return (0);
+	else
+		return (1);
+}
