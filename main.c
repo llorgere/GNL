@@ -3,11 +3,12 @@
 
 int        main(void)
 {
-	int fd = open("test.txt", O_RDONLY);
+	int fd = open("gnl10.txt", O_RDONLY);
 	char    *line = NULL;
-
+	int 	ret;
+	ret = 0;
 	printf("test 1 du main, fd est %d\n", fd);
-	while ((get_next_line(fd, &line)))
+	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		printf("test 2 du main\n");
 		printf("%s\n", line);
@@ -16,5 +17,4 @@ int        main(void)
 	close(fd);
 	printf("test 4 du main\n");
 	return (0);
-
 }

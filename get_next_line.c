@@ -10,44 +10,93 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
+
+int		ft_test_rest(char *rest)
+{
+	int		i;
+
+	i = 0;
+	if (rest)
+	while (rest && i < ((int)ft_strlen(rest) + 1))
+	{
+		if (rest[i] == '\n')
+			return (i);
+		else if (rest[i] == '\0')
+			return (-2 * (i + 1));
+		i++;
+	}
+	return (-1);
+}
+
+void	ft_copy_to_line(char **rest, char **line)
+{
+	int		j;
+	int		end;
+	char	*tmp;
+
+	end = 0;
+	if (*line)
+		free(*line);
+	j = ft_test_rest(*rest);
+	if (j < -1)
+	{
+		j = (j / (-2)) - 1;
+		end++;
+	}
+	if(!(*line = malloc(sizeof(char) * (j + 1))))
+		return ;
+	*line = ft_strndup(*rest, j);
+	tmp = ft_strdup(*rest + j + 1 - end);
+	free(*rest);
+	*rest = ft_strdup(tmp);
+	free(tmp);
+}
 
 int		get_next_line(const int fd, char **line)
 {
-	char	*str;
-//	char	**line;
-	int 	j;
-	char	**p_line;
-	static int		i;
-	char	buff[BUFF_SIZE + 1];
+	static char *rest = NULL;
+	char		buff[BUFF_SIZE + 1];
+	int			size;
+	char		*tmp;
 
-//	i = 0;
-	while (read(fd, buff, BUFF_SIZE) != 0)
+	if (fd < 0)
+		return (-1);
+	ft_strclr(buff);
+	if (ft_test_rest(rest) <= -1)
 	{
-		j = 0;
-		buff[BUFF_SIZE] = '\0';
-		while (buff[j] != '\0')
+		size = read(fd, buff, BUFF_SIZE);
+		buff[size] = '\0';
+		if (ft_test_rest(buff) == -2 && ft_test_rest(rest) == -2)
 		{
-			line[i][j] = buff[j];
-			if (buff[j] == '\n')
-			{  
-				while (buff[j] != '\0')
-				{
-					p_line[i][j] = buff[j];
-
-				}
-				i++;
-				return (1);
-			}
-			else if (buff[j] == EOF)
-				return (0)
-			j++;
+			free(rest);
+			free(*line);
+			return (0);
 		}
-		while (j <= BUFF_SIZE)
+		else if (ft_test_rest(rest) == -1)
+			rest = ft_strdup(buff);
+		else if (ft_test_rest(rest) < -1 && ft_test_rest(buff) != -2)
 		{
-			p_line[i][j] = buff[j];
-			j++;
+			tmp = ft_strjoin(rest, buff);
+			free(rest);
+			rest = tmp;
 		}
-		i++;
+		while (ft_test_rest(rest) <= -1 && ft_test_rest(buff) != -2)
+		{
+			ft_strclr(buff);
+			read(fd, buff, BUFF_SIZE);
+			tmp = ft_strjoin(rest, buff);
+			free(rest);
+			rest = tmp;
+		}
+		ft_copy_to_line(&(rest), line);
+		return (1);
+	}
+	else
+	{
+		ft_copy_to_line(&(rest), line);
+		ft_strclr(buff);
+		return (1);
 	}
 }

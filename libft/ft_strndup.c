@@ -1,20 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llorgere <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/13 17:03:22 by llorgere          #+#    #+#             */
-/*   Updated: 2017/06/17 17:25:33 by llorgere         ###   ########.fr       */
+/*   Created: 2017/04/11 18:00:27 by llorgere          #+#    #+#             */
+/*   Updated: 2017/05/08 18:53:11 by llorgere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 56
-# include "libft/libft.h"
-int		get_next_line(const int fd, char **line);
+#include "libft.h"
 
+char	*ft_strndup(const char *s, size_t n)
+{
+	size_t	i;
+	size_t	j;
+	char	*moc;
 
-#endif
+	i = 0;
+	j = 0;
+	while (s[i] != '\0')
+		i++;
+	if (i < n)
+	{
+	moc = (char*)malloc(sizeof(*moc) * (n + 1));
+	if (!moc)
+		return (NULL);
+	}
+	else
+	{
+	moc = (char*)malloc(sizeof(*moc) * (i));
+	if (!moc)
+		return (NULL);
+	}
+	while (j < i && j < n)
+	{
+		moc[j] = s[j];
+		j++;
+	}
+	moc[j] = '\0';
+	return (moc);
+}
