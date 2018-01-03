@@ -22,7 +22,7 @@ char	*ft_strdup(const char *s)
 	j = 0;
 	while (s[i] != '\0')
 		i++;
-	moc = (char*)malloc(sizeof(*moc) * (i));
+	moc = (char*)malloc(sizeof(*moc) * (i + 1));
 	if (!moc)
 		return (NULL);
 	while (j < i)

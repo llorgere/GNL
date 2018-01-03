@@ -3,7 +3,7 @@
 
 int        main(void)
 {
-	int fd = open("gnl10.txt", O_RDONLY);
+	int fd = open("gnl7_3.txt", O_RDONLY);
 	char    *line = NULL;
 	int 	ret;
 	ret = 0;
