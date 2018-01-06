@@ -59,7 +59,7 @@ void	ft_copy_to_line(char **rest, char **line)
 	tmp = ft_strdup(*rest + j + 1 - end);
 	free(*rest);
 	*rest = ft_strdup(tmp);
-	free(tmp);
+//	free(tmp);
 }
 
 int		get_next_line(const int fd, char **line)
@@ -82,8 +82,10 @@ int		get_next_line(const int fd, char **line)
 		if (ft_test_rest(buff) == -2 && ft_test_rest(rest) == -2)
 		{
 //			printf("size est [%d], buff est [%s]\n", size, buff);
-			free(rest);
-			free(*line);
+			if (rest)
+				free(rest);
+			if (*line)
+				free(*line);
 			return (0);
 		}
 		else if (ft_test_rest(rest) == -1)
