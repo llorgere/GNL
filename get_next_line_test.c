@@ -41,12 +41,11 @@ void	ft_copy_to_line(char **rest, char **line)
 	int		j;
 	int		end;
 	char	*tmp;
-	char	*tmpl;
 
 //	printf("test 1 de copy_toline\n");
 	end = 0;
-//	if (*line)
-//		free(*line);
+	if (*line)
+		free(*line);
 	j = ft_test_rest(*rest);
 	if (j < -1)
 	{
@@ -56,20 +55,18 @@ void	ft_copy_to_line(char **rest, char **line)
 //	printf("test  de copy_toline rest : {%s} j est [%d] end est [%d] et rest + j + 1 - end est [%s]\n", *rest, j, end, *rest + j + 1 - end);
 /*	if(!(*line = malloc(sizeof(char) * (j + 1))))
 		return ;
-*///	*line = ft_strndup(*rest, j);
-	tmpl = ft_strndup(*rest, j);
-	*line = tmpl;
+*/	*linef = ft_strndup(*rest, j);
 	tmp = ft_strdup(*rest + j + 1 - end);
 	free(*rest);
 	*rest = ft_strdup(tmp);
 	free(tmp);
-//	free(tmpl);
 }
 
 int		get_next_line(const int fd, char **line)
 {
 	static char *rest = NULL;
 	char		buff[BUFF_SIZE + 1];
+	char		*linef;
 	int			size;
 	char		*tmp;
 
@@ -81,8 +78,6 @@ int		get_next_line(const int fd, char **line)
 	if (ft_test_rest(rest) <= -1)
 	{
 		size = read(fd, buff, BUFF_SIZE);
-		if (size == -1)
-			return (-1);
 		buff[size] = '\0';
 	//	printf("size est [%d], buff est [%s] test de buff est {%d} et test de rest est{%d}\n", size, buff, ft_test_rest(buff), ft_test_rest(rest));
 		if (ft_test_rest(buff) == -2 && ft_test_rest(rest) == -2)
@@ -90,9 +85,9 @@ int		get_next_line(const int fd, char **line)
 //			printf("size est [%d], buff est [%s]\n", size, buff);
 			if (rest)
 				free(rest);
-	//		if (*line)
-	//			free(*line);
-			*line = NULL;	
+			if (*linef)
+				free(*linef);
+			*line = NULL;
 			return (0);
 		}
 		else if (ft_test_rest(rest) == -1)
@@ -113,20 +108,20 @@ int		get_next_line(const int fd, char **line)
 		{
 			if (size >= 0)
 				ft_strclr(buff);
-			else if (size == -1)
-				return (-1);
 			read(fd, buff, BUFF_SIZE);
 			tmp = ft_strjoin(rest, buff);
 			free(rest);
 			rest = tmp;
 		}
 //		printf("test 2 de gnl\n");
-		ft_copy_to_line(&(rest), line);
-		return (1);
+		ft_copy_to_line(&(rest), linef);
+		*line = linef;
+		return (1)
 	}
 	else
 	{
-		ft_copy_to_line(&(rest), line);
+		ft_copy_to_line(&(rest), linef);
+		*line = linef;
 		if (size >= 0)
 			ft_strclr(buff);
 		return (1);

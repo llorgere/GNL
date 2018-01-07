@@ -31,20 +31,25 @@ int	 main(void)
 	pipe(p);
 
 	dup2(p[1], fd);
-	write(fd, "aaa\nbbb\nccc\nddd\n", 16);
+	write(fd, "mnopqrstuvwxyzab", 16);
 	dup2(out, fd);
 	close(p[1]);
-	get_next_line(p[0], &line);
+//	get_next_line(p[0], &line);
+	printf("[%d]", get_next_line(p[0], &line));
 //	mt_assert(strcmp(line, "aaa") == 0);
 	printf("1 line est [%s]\n", line);
-	get_next_line(p[0], &line);
+//	get_next_line(p[0], &line);
+	printf("[%d]", get_next_line(p[0], &line));
 //	mt_assert(strcmp(line, "bbb") == 0);
 	printf("2 line est [%s]\n", line);
-	get_next_line(p[0], &line);
+//	get_next_line(p[0], &line);
+//	printf("[%d]", get_next_line(p[0], &line));
 //	mt_assert(strcmp(line, "ccc") == 0);
-	printf("3 line est [%s]\n", line);
-	get_next_line(p[0], &line);
-	printf("4 line est [%s]\n", line);
+//	printf("3 line est [%s]\n", line);
+//	printf("[%d]", get_next_line(p[0], &line));
+	//get_next_line(p[0], &line);
+//	printf("4 line est [%s]\n", line);
 //	mt_assert(strcmp(line, "ddd") == 0);
+//	printf("[%d]", get_next_line(p[0], &line));
 	return (0);
 }
